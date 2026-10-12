@@ -1,6 +1,7 @@
 package com.example.usermanagenmant.services;
 
 import com.example.usermanagenmant.models.Task;
+import com.example.usermanagenmant.models.User;
 import com.example.usermanagenmant.repositories.TaskRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,10 +13,12 @@ import java.util.stream.Collectors;
 @Service
 public class TaskService {
     private final TaskRepository taskRepository;
+    private final UserService userService;
 
     @Autowired
-    public TaskService(TaskRepository taskRepository) {
+    public TaskService(TaskRepository taskRepository, UserService userService) {
         this.taskRepository = taskRepository;
+        this.userService = userService;
     }
 
     public List<Task> findAllTasks() {
@@ -33,5 +36,13 @@ public class TaskService {
         }
 
         return tasks;
+    }
+    public Task createTask(Task newTask) {
+        User existingUser = userService.findUserById(newTask.getAssignedTo());
+
+        if (existingUser == null) {
+            return null;
+        }
+        return taskRepository.save(newTask);
     }
 }

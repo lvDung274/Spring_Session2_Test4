@@ -20,6 +20,13 @@ import java.util.List;
         return users;
     }
 
+    public User findById(Long id) {
+        return users.stream()
+                .filter(user -> user.getId() != null && user.getId() == id)
+                .findFirst()
+                .orElse(null);
+    }
+
 
 
 }

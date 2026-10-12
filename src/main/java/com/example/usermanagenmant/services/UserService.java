@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class UserService {
+
     private final UserRepository userRepository;
 
     @Autowired
@@ -35,5 +36,8 @@ public class UserService {
         }
 
         return users;
+    }
+    public User findUserById(Long id) {
+        return userRepository.findById(id);
     }
 }

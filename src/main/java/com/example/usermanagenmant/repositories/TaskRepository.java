@@ -24,7 +24,14 @@ public class TaskRepository {
                )
        );
 
+    private Long idCounter = 11L;
+
        public List<Task> findAllTasks() {
            return tasks;
        }
+    public Task save(Task task) {
+        task.setId(idCounter++);
+        tasks.add(task);
+        return task;
+    }
 }
